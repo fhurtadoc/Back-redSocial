@@ -4,8 +4,8 @@ const login=require('../services/login');
 
 const router = express.Router();
 
-router.post('/login', login.login);
-router.post('/logup', login.logup);
+router.use('/login', login.login);
+router.use('/logup', login.logup);
 
 
 

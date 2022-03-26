@@ -19,9 +19,12 @@ module.exports = {
         let nickname=req.body.nickname;        
         let password=req.body.password;
         let status=req.body.status;
+
+        password_encrypt = await encrypt.encryptPassword(password);
         
-        let new_user=new user_model(email,nickname,password, status);
-        user_dao.createUser(new_user, (new_user, err)=>{
+        let new_user=new user_model(email,nickname,password_encrypt, status);
+
+        user_dao.createUser(new_user, async (new_user, err)=>{
             if(err) return res.send({menssaje:"error en query", codigo: 404})
             if(new_user)return res.send({menssaje:"Creado correctamente", codigo:200});
         })
@@ -31,17 +34,17 @@ module.exports = {
         if (!req.body.email) return res.sendStatus(400);        
         let email=req.body.email;                
         let password_insert=req.body.password;                
-        user_dao.find_user( email, (user, err)=>{
+        user_dao.find_user( email,  async (user, err)=>{
             console.log(user); 
             if(err) return res.send({menssaje:"error en query", codigo: 402});
             if(user.length<=0) return res.send({menssaje:"el correo no existe", codigo: 402});
             if(user){
-                let validPassword=await encrypt.matchPassword(password_insert, usuario[0].password);
+                let validPassword= await encrypt.matchPassword(password_insert, user[0].password);
                     if(!validPassword){
                     return res.send({menssaje: 'contraseña es incorrecta'});
                 }else{
-                    
-                    const token=await jwt.sign({user: user_dto.single(user, req.users)}, 'process.env.TOKEN_FORGOT');
+
+                    const token= await jwt.sign({user: user_dto.single(user, req.users)}, 'process.env.TOKEN_FORGOT');
                     return res.send({token});
                 }
             }

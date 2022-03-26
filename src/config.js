@@ -2,7 +2,7 @@ let localhost={
     host:'localhost',
     user: 'codigodeplaton',
     password:'12345',
-    database:'autolujos_universo',
+    database:'redSocial',
     port:'3306'    
 }
 
