@@ -49,5 +49,30 @@ module.exports = {
                 }
             }
         })
+    }, 
+
+    async edit_pass(req, res){
+        var id=req.params.id
+        if (!req.body.password) return res.sendStatus(400);
+        if (!id) return res.sendStatus(400);
+
+    },
+
+    async edit_image(req, res){        
+        if(req.files.cover.path){
+            let filePath=req.files.cover.path;        
+            let fileSplit = filePath.split("/");
+            fileName = fileSplit[3];
+        } 
+        var id=req.params.id
+        if (!fileName) return res.sendStatus(400);
+        if (!id) return res.sendStatus(400);
+        user_dao.edit_image(id, fileName, async(user, res)=>{
+            if(err) return res.send({menssaje:"error en query", codigo: 402});
+            if(user)return res.send({menssaje:"cargado correctamente", codigo:200});
+        })
+        
     }
+
+    
 }

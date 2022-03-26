@@ -4,6 +4,7 @@ let morgan=require('morgan');
 let bodyParser = require('body-parser');
 let passport=require('passport');
 const cors=require('cors');
+const path=require('path');
 
 
 
@@ -27,6 +28,10 @@ app.use((req, res, next) => {
 
 // 2. Middlewares
 
+//public file 
+app.use(express.static(path.join(__dirname, 'public/perfil')));
+
+
 //sesiones
 app.use(session({
   secret: 'kadcksacnsakjflas',
@@ -48,6 +53,8 @@ app.use(passport.session());
 
 //3.rutas
 app.use(indexRouter);
+
+
 
 
 
