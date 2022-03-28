@@ -31,6 +31,7 @@ module.exports = {
     },
 
     async login(req, res){
+        console.log(req);         
         if (!req.body.email) return res.sendStatus(400);        
         let email=req.body.email;                
         let password_insert=req.body.password;                
@@ -44,8 +45,10 @@ module.exports = {
                     return res.send({menssaje: 'contraseña es incorrecta'});
                 }else{
 
-                    const token= await jwt.sign({user: user_dto.single(user, req.users)}, 'process.env.TOKEN_FORGOT');
-                    return res.send({token});
+                    const token= await jwt.sign({user: user_dto.single(user[0], req.users)}, 'process.env.TOKEN_FORGOT');
+                    //console.log(user_dto.single(user, req.users));
+                    //console.log(jwt.decode(token,'process.env.TOKEN_FORGOT'));
+                    return res.send({token:token, codigo:200});
                 }
             }
         })
@@ -78,17 +81,11 @@ module.exports = {
                     id_img:res.insertId
                 }
                 user_dao.asoc_img(img_pefilasoc, (res_asoc, err)=>{
-                    if(res_asoc){
-                        console.log(res_asoc);
-                    }
-                    if(err){
-                        console.log(err);
-                    }
+                    if(res_asoc) return res.send({menssaje:"modificado correctamente", codigo:200})
+                    if(err) return res.send({menssaje:"error en query", codigo: 402});
                 })
             }
-            if(err){
-                console.log(err);
-            }
+        if(err) return res.send({menssaje:"error en query", codigo: 402});
         })
         
     }

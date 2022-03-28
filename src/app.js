@@ -2,9 +2,10 @@ let express = require('express');
 let session=require('express-session');
 let morgan=require('morgan');
 let bodyParser = require('body-parser');
-let passport=require('passport');
-const cors=require('cors');
 const path=require('path');
+var multer = require('multer');
+var forms = multer();
+
 
 
 
@@ -29,7 +30,8 @@ app.use((req, res, next) => {
 // 2. Middlewares
 
 //public file 
-app.use(express.static(path.join(__dirname, 'public/')));
+app.use(express.static(path.join(__dirname, 'public/img_post/')));
+app.use(express.static(path.join(__dirname, 'public/perfil')));
 
 
 //sesiones
@@ -44,20 +46,13 @@ app.use(session({
 app.use(morgan("dev"));
 //-body parser 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-
-//pasport 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(forms.array()); 
 
 
 //3.rutas
 app.use(indexRouter);
-
-
-
-
 
 
 module.exports = app;

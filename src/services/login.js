@@ -12,8 +12,9 @@ const controller_user= require('../ApiService/users/user_controller')
 */
 module.exports = {
 
-    async login (req, res){        
+    async login (req, res){                
         let user=controller_user.login(req, res);
+        
     }, 
 
     async logup (req, res){        
