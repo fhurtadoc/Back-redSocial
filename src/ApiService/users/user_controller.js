@@ -63,18 +63,21 @@ module.exports = {
     },
 
     async edit_image(req, res){        
-        if (!req.files.cover.path) return res.sendStatus(400);
+        if (!req.files.perfilImg.path) return res.sendStatus(400);
         if (!req.params.id) return res.sendStatus(400);
 
-        let filePath=req.files.cover.path;        
-        let fileSplit = filePath.split("/");
-        var fileName = fileSplit[3];
-        var id=req.params.id        
-
-        user_dao.edit_image(fileName, async(res, err)=>{
+        var filePath=req.files.perfilImg.path;
+        var fileSplit = filePath.split("/");
+        var path_img = fileSplit[3];
+        var id=req.params.id                
+        user_dao.edit_image(path_img, async(res, err)=>{
             if(res){
                 console.log(res.insertId);
-                user_dao.asoc_img(id, res.insertId, (res_asoc, err)=>{
+                var img_pefilasoc={
+                    id_user:id,
+                    id_img:res.insertId
+                }
+                user_dao.asoc_img(img_pefilasoc, (res_asoc, err)=>{
                     if(res_asoc){
                         console.log(res_asoc);
                     }

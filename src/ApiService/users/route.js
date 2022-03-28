@@ -1,6 +1,6 @@
 const express = require('express');
 const multipart = require('connect-multiparty');
-const multipartMiddleware = multipart({ uploadDir: '../../public/perfil'});
+const multipartMiddleware = multipart({ uploadDir: 'src/public/perfil'});
 
 
 const controller = require('./user_controller');

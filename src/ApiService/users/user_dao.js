@@ -1,5 +1,4 @@
 const pool=require('../../CONEXIONsql/sql');
-const { edit_image } = require('./user_controller');
 
 const FIND_USER =('SELECT * FROM Users WHERE email=?');
 const INSERT=('INSERT INTO Users set ?');
@@ -29,7 +28,7 @@ module.exports={
         })
     }, 
 
-    async edit_pass(id, password){
+    async edit_pass(id, password, done){
         pool.query(UPDATEPASS, [password, id], (err, res)=>{
             if(err){
                 done(err);
@@ -39,9 +38,9 @@ module.exports={
         })
     },
 
-    async edit_image(image){
-        pool.query(INSERTIMG, image, (err, res)=>{
-            if(err){
+    async edit_image(path_img, done){
+        pool.query(INSERTIMG, {path_img:path_img}, (err, res)=>{
+            if(err){                
                 done(err);
             }else{
                 done(res);
@@ -49,8 +48,8 @@ module.exports={
         })
     },
 
-    async asoc_img(id_user, id_img){
-        pool.query( ASOCIMG,  [id_user, id_img], (err, res)=>{
+    async asoc_img(img_pefilasoc, done){        
+        pool.query( ASOCIMG,  img_pefilasoc, (err, res)=>{
             if(err){
                 done(err);
             }else{
