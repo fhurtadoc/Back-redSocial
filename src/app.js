@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 // 2. Middlewares
 
 //public file 
-app.use(express.static(path.join(__dirname, 'public/perfil')));
+app.use(express.static(path.join(__dirname, 'public/')));
 
 
 //sesiones

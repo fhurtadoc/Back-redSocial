@@ -53,9 +53,13 @@ module.exports = {
 
     async edit_pass(req, res){
         var id=req.params.id
-        if (!req.body.password) return res.sendStatus(400);
+        if (!req.body.new_password) return res.sendStatus(400);
         if (!id) return res.sendStatus(400);
-
+        password_encrypt = await encrypt.encryptPassword(req.body.new_password);
+        user_dao.edit_pass(id, password_encrypt, async(passedit, res)=>{
+            if(err) return res.send({menssaje:"error en query", codigo: 402});
+            if(passedit)return res.send({menssaje:"modificado correctamente", codigo:200});
+        })
     },
 
     async edit_image(req, res){        
@@ -64,6 +68,7 @@ module.exports = {
             let fileSplit = filePath.split("/");
             fileName = fileSplit[3];
         } 
+        
         var id=req.params.id
         if (!fileName) return res.sendStatus(400);
         if (!id) return res.sendStatus(400);
@@ -73,6 +78,4 @@ module.exports = {
         })
         
     }
-
-    
 }
