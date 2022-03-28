@@ -3,7 +3,8 @@ const { edit_image } = require('./user_controller');
 
 const FIND_USER =('SELECT * FROM Users WHERE email=?');
 const INSERT=('INSERT INTO Users set ?');
-const UPDATEIMG=('UPDATE Users SET imagen=? WHERE id_user=?');
+const INSERTIMG=('INSERT INTO perfil_img set ?');
+const ASOCIMG=('INSERT INTO img_pefilasoc set ?');
 const UPDATEPASS=('UPDATE Users SET password=? WHERE id_user=?');
 
 module.exports={
@@ -38,8 +39,8 @@ module.exports={
         })
     },
 
-    async edit_image(id, image){
-        pool.query(UPDATEIMG, [image, id], (err, res)=>{
+    async edit_image(image){
+        pool.query(INSERTIMG, image, (err, res)=>{
             if(err){
                 done(err);
             }else{
@@ -47,4 +48,14 @@ module.exports={
             }
         })
     },
+
+    async asoc_img(id_user, id_img){
+        pool.query( ASOCIMG,  [id_user, id_img], (err, res)=>{
+            if(err){
+                done(err);
+            }else{
+                done(res);
+            }
+        })
+    }
 }

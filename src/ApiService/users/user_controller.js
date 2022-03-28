@@ -63,18 +63,29 @@ module.exports = {
     },
 
     async edit_image(req, res){        
-        if(req.files.cover.path){
-            let filePath=req.files.cover.path;        
-            let fileSplit = filePath.split("/");
-            fileName = fileSplit[3];
-        } 
-        
-        var id=req.params.id
-        if (!fileName) return res.sendStatus(400);
-        if (!id) return res.sendStatus(400);
-        user_dao.edit_image(id, fileName, async(user, res)=>{
-            if(err) return res.send({menssaje:"error en query", codigo: 402});
-            if(user)return res.send({menssaje:"cargado correctamente", codigo:200});
+        if (!req.files.cover.path) return res.sendStatus(400);
+        if (!req.params.id) return res.sendStatus(400);
+
+        let filePath=req.files.cover.path;        
+        let fileSplit = filePath.split("/");
+        var fileName = fileSplit[3];
+        var id=req.params.id        
+
+        user_dao.edit_image(fileName, async(res, err)=>{
+            if(res){
+                console.log(res.insertId);
+                user_dao.asoc_img(id, res.insertId, (res_asoc, err)=>{
+                    if(res_asoc){
+                        console.log(res_asoc);
+                    }
+                    if(err){
+                        console.log(err);
+                    }
+                })
+            }
+            if(err){
+                console.log(err);
+            }
         })
         
     }
