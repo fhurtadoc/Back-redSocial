@@ -9,7 +9,7 @@ module.exports = {
 
     async create_post(req, res){
         console.log(req.files);
-        /*if(!req.files.img.path)return res.sendStatus(400);
+        if(!req.files.img.path)return res.sendStatus(400);
         if (!req.body.id_user) return res.sendStatus(400);
         if (!req.body.description) return res.sendStatus(400);
         var filePath=req.files.img.path; 
@@ -22,7 +22,7 @@ module.exports = {
         Post_dao.create_post(post_model, (res, err)=>{
             if(res) return res.send({menssaje:"Creado Correctamente", codigo:200})
             if(err) return res.send({menssaje:"error en query", codigo: 402});
-        })*/
+        })
     }, 
 
     async list_postXid(req, res){
