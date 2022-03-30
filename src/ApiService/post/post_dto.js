@@ -1,12 +1,14 @@
 var single = (resource, authUser) => ({
-    id: resource.id_user,
-    description:resource.description,
-    img:resource.img
+  id: resource.id_user,
+  description: resource.description,
+  img: resource.img,
+  date: resource.date,
 });
 
-var multiple = (resources, authUser) => resources.map((resource) => single(resource, authUser));
+var multiple = (resources, authUser) =>
+  resources.map((resource) => single(resource, authUser));
 
 module.exports = {
-    single,
-    multiple,
+  single,
+  multiple,
 };
