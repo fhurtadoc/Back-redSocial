@@ -6,7 +6,7 @@ const INSERTIMG = "INSERT INTO perfil_img set ?";
 const ASOCIMG = "INSERT INTO img_pefilasoc set ?";
 const UPDATEPASS = "UPDATE Users SET password=? WHERE id_user=?";
 const SELECT_FRIENDS =
-  "select * from friends f  inner join users u on f.id_friends = f.id_user where f.id_user = ?";
+  "select * from friends f  inner join Users u on f.id_friends = f.id_user where f.id_user = ?";
 const INSER_FRIEND = "INSERT INTO friends set ?";
 module.exports = {
   async find_user(email, done) {
@@ -80,7 +80,7 @@ module.exports = {
 
   async findFriend(email, done) {
     pool.query(
-      "SELECT * FROM users WHERE email LIKE" + "'%" + email + "%'",
+      "SELECT * FROM Users WHERE email LIKE" + "'%" + email + "%'",
       (err, res) => {
         if (err) {
           done(err);

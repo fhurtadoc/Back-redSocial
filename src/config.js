@@ -1,7 +1,8 @@
 let localhost = {
   host: "localhost",
-  user: "root",
+  user: "codigodeplaton",
   database: "redSocial",
+  password:'12345',
   port: "3306",
 };
 

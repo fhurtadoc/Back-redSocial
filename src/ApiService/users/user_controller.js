@@ -127,6 +127,7 @@ module.exports = {
     if (!req.body.email) return res.sendStatus(400);
     var email = req.body.email;
     user_dao.findFriend(email, (res_friends, err) => {
+      
       if (res_friends) {
         return res.send(user_dto.multiple(res_friends, req.res));
       }
